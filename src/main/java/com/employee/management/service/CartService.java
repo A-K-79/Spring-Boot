@@ -1,6 +1,7 @@
 package com.employee.management.service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import com.employee.management.repository.CartItemRepository;
 import com.employee.management.repository.ProductRepository;
 import com.employee.management.repository.StudentRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -66,6 +68,7 @@ public class CartService {
         return true; // Successfully added to cart
     }
 
+    @Transactional
     public boolean deleteItemFromCart(Integer studentId, Integer productId) {
         Optional<Student> studentOpt = studentRepository.findById(studentId);
         Optional<Product> productOpt = productRepository.findById(productId);
@@ -83,5 +86,15 @@ public class CartService {
 
         cartItemRepository.deleteByStudentIdAndProductId(student, product);
         return true; // Successfully removed from cart
+    }
+
+    public List<CartItem> getCartItems(Integer studentId) {
+         Optional<Student> studentOpt = studentRepository.findById(studentId);
+        if (studentOpt.isEmpty()) { // Check if the student exists in the database
+            return List.of(); // Student not found, return empty list
+        }
+
+        Student student = studentOpt.get();
+        return cartItemRepository.findByStudent(student);
     }
 }

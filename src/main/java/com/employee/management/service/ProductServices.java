@@ -39,7 +39,7 @@ public class ProductServices {
         product.setPrice(productRequest.getPrice());
         product.setStockQuantity(productRequest.getStockQuantity());
         product.setImageUrl(productRequest.getImageUrl());
-        
+        product.setActive(true);
         product.setCategory(productRequest.getCategory());
     }
     
@@ -54,6 +54,7 @@ public class ProductServices {
         response.setStockQuantity(product.getStockQuantity());
         response.setImageUrl(product.getImageUrl());
         response.setCategory(product.getCategory());
+        response.setActive(product.isActive());
         return response;
     }
 

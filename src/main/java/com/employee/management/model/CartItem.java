@@ -15,7 +15,7 @@ import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 @Data
-@Entity(name = "Cart-Wheel") // create a table with name Cart-Wheel
+@Entity(name = "Cart_Wheel") // create a table with name Cart-Wheel
 
 
 public class CartItem {
