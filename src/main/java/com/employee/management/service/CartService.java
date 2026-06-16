@@ -97,4 +97,16 @@ public class CartService {
         Student student = studentOpt.get();
         return cartItemRepository.findByStudent(student);
     }
+    
+    @Transactional
+    public void clearCart(Integer studentId) {
+        Optional<Student> studentOpt = studentRepository.findById(studentId);
+        if (studentOpt.isEmpty()) { // Check if the student exists in the database
+            return; // Student not found, do nothing
+        }
+
+        Student student = studentOpt.get();
+        cartItemRepository.deleteByStudentId(student.getId());
+    }
+
 }

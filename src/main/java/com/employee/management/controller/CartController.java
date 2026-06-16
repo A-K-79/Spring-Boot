@@ -28,7 +28,7 @@ public class CartController {
     private final CartService cartService; // dependency injection of CartService into CartController.
 
     @PostMapping
-    public ResponseEntity<String> addToCart(
+    public ResponseEntity<String> addItemToCart(
         @RequestHeader("X-Student-ID") Integer studentId,
         @RequestBody CartItemRequest request) {
             
@@ -49,6 +49,12 @@ public class CartController {
     public ResponseEntity<List<CartItem>> getCartItems(@RequestHeader("X-Student-ID") Integer studentId) {
         List<CartItem> cartItems = cartService.getCartItems(studentId);
         return ResponseEntity.ok(cartItems);
+    }
+
+    @DeleteMapping("/clear")
+    public ResponseEntity<String> clearCart(@RequestHeader("X-Student-ID") Integer studentId) {
+        cartService.clearCart(studentId);
+        return ResponseEntity.ok("Cart cleared successfully");
     }
 
 }
